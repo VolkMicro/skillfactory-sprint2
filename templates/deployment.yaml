@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 3003
+          env:
+            - name: DB_HOST
+              value: "db.default.svc.cluster.local"
+            - name: DB_NAME
+              value: "{{ .Values.postgres.db.name }}"
+            - name: DB_USER
+              value: "{{ .Values.postgres.db.user }}"
+            - name: DB_PASS
+              value: "{{ .Values.postgres.db.password }}"

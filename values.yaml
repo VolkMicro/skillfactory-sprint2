@@ -1,0 +1,26 @@
+image:
+  repository: microvolk/diplom
+  tag: latest
+
+serviceAccount:
+  create: true
+  name: ""
+
+ingress:
+  enabled: false
+
+postgres:
+  enabled: true  # Убедитесь, что этот флаг используется для включения Postgres
+  image: postgres:13-alpine
+  service:
+    type: ClusterIP
+    port: 5432
+  db:
+    name: tutorial-dev
+    user: vinhle
+    password: password
+
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30080
